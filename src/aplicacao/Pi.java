@@ -1,5 +1,8 @@
 package aplicacao;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,19 +14,35 @@ public class Pi {
     private String decimaisPi;
     private String sequenciaPrimos;
 
-    public static void main(String args[]) {
 
-        String decimaisPi = "14159265358979323846";
+    public static void main(String args[]) throws IOException {
+
+        String decimaisPi = "";
         int primoPrimeiro = 2;
         int primoUltimo = 9973;
 
-        Pi pi = new Pi(decimaisPi, primoPrimeiro, primoUltimo);
+        Pi pi = new Pi(decimaisPi, primoPrimeiro,primoUltimo);
+
+        pi.leitorArquivoTxt();
         pi.calculaMaiorSequenciaPrimos();
         System.out.println(pi.getSequenciaPrimos());
     }
 
-    public String getSequenciaPrimos() {
-        return this.sequenciaPrimos;
+    public String getSequenciaPrimos() { return this.sequenciaPrimos; }
+
+
+    public void leitorArquivoTxt() throws IOException {
+        BufferedReader buffRead = new BufferedReader(new FileReader("src/documentos/valorPi.txt"));
+        String linha = "";
+        while (true) {
+            if (linha != null) {
+                this.decimaisPi = linha;
+            } else
+                break;
+            linha = buffRead.readLine();
+        }
+
+        buffRead.close();
     }
 
     public Pi(String decimaisPi, int limiteInferior, int limiteSuperior) {
